@@ -3,6 +3,10 @@
   height:64px;
   width:64px;
 }
+.dudes img {
+
+  margin-right:8px;
+}
 .template {
   visibility: hidden;
   display: none;
@@ -245,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function() {
       //console.log(testObject.get("src"));
       query.find({
         success: function(results) {
-          console.log("Successfully retrieved " + results.length + " scores.");
+          console.log("Successfully retrieved " + results.length + " dudes.");
           // Do something with the returned Parse.Object values
           for (var i = results.length-1; i >= 0; i--) {
           //for (var i = 0; i < results.length; i++) {
