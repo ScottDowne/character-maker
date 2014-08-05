@@ -66,15 +66,15 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   var images = "skin,eye,shirt,pants,belt,buckle,hat,boots,sword,knife,staff".split(",");
-  var loadingImages = images.length-1;
+  var loadingImages = images.length;
   images.forEach( function(image) {
     var img = document.createElement("img");
     document.body.appendChild(img);
     img.classList.add("template");
     img.classList.add(image);
     img.addEventListener("load", function() {
-
       loadingImages--;
+console.log("done", loadingImages);
       if (loadingImages === 0) {
 
         ready();
