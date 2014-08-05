@@ -2,14 +2,13 @@
 .sprite-image {
   height:64px;
   width:64px;
-  image-rendering: -moz-crisp-edges;
-  image-rendering:-webkit-optimize-contrast;
 }
 .template {
   visibility: hidden;
+  display: none;
 }
 </style>
-
+<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
 <img class="sprite-image"></img>
 <br>
 
@@ -70,7 +69,13 @@
   </select>
 </div>
 
+<button class="save-dude">save dude</button>
+<br>
+Other dudes
+<div class="dudes"></div>
+
 <script>
+Parse.initialize("QKd4Bi5syX0TSnmdJefTaehNJrXa7M0Qweu5lAMt", "izFh0K1jsaX0jeZfWXKo1ZUSGkvuYTBmqREhQ4Ns");
 document.addEventListener("DOMContentLoaded", function() {
   var images = "skin,eye,shirt,pants,belt,buckle,hat,boots,sword,knife,staff,robe".split(",");
   var loadingImages = images.length;
@@ -99,7 +104,6 @@ document.addEventListener("DOMContentLoaded", function() {
       var part = parts[p];
       window[part + "Colour"] = document.querySelector("." + part + "-colour input").value;
       if (window[part + "Style"]) {
-        console.log("." + window[part + "Style"]);
         window[part + "Data"] = getDataFromImage("." + window[part + "Style"]);
       } else {
         window[part + "Data"] = getDataFromImage("." + part);
@@ -232,6 +236,39 @@ document.addEventListener("DOMContentLoaded", function() {
       spriteImage.src = canvas.toDataURL();
     }
     render();
+    function generateDudes() {
+      var dudes = document.querySelector(".dudes");
+      dudes.innerHTML = "";
+      var TestObject = Parse.Object.extend("DudesTest");
+      //var testObject = new TestObject();
+      var query = new Parse.Query(TestObject);
+      //console.log(testObject.get("src"));
+      query.find({
+        success: function(results) {
+          console.log("Successfully retrieved " + results.length + " scores.");
+          // Do something with the returned Parse.Object values
+          for (var i = results.length-1; i >= 0; i--) {
+          //for (var i = 0; i < results.length; i++) {
+            var object = results[i];
+            var img = document.createElement("img");
+            img.src = object.get("src");
+            dudes.appendChild(img);
+          }
+        },
+        error: function(error) {
+          console.log("Error: " + error.code + " " + error.message);
+        }
+      });
+    }
+    generateDudes();
+    document.querySelector(".save-dude").addEventListener("click", function() {
+      var TestObject = Parse.Object.extend("DudesTest");
+      var testObject = new TestObject();
+      testObject.save({src: spriteImage.src}).then(function(object) {
+        generateDudes();
+      });
+
+    });
   }
 });
 </script>
