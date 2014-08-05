@@ -1,0 +1,207 @@
+<style>
+.sprite-image {
+  height:64px;
+  width:64px;
+  image-rendering: -moz-crisp-edges;
+}
+.template {
+  visibility: hidden;
+}
+</style>
+
+<img class="sprite-image"></img>
+<img class="template eye" src="eyes.png"></img>
+<img class="template skin" src="skin.png"></img>
+<img class="template shirt" src="shirt.png"></img>
+<img class="template pants" src="pants.png"></img>
+<img class="template belt" src="belt.png"></img>
+<img class="template buckle" src="buckle.png"></img>
+<img class="template hat" src="hat.png"></img>
+<img class="template boots" src="boots.png"></img>
+
+<img class="template knife" src="knife.png"></img>
+<img class="template sword" src="sword.png"></img>
+<img class="template staff" src="staff.png"></img>
+<br>
+
+<div class="background-colour">
+  <label>Background colour</label>
+  <input value="#ffffff" type="color"></input>
+</div>
+<div class="skin-colour">
+  <label>Skin colour</label>
+  <input value="#000000" type="color"></input>
+</div>
+<div class="eye-colour">
+  <label>Eye colour</label>
+  <input value="#ffff00" type="color"></input>
+</div>
+<div class="shirt-colour">
+  <label>Shirt colour</label>
+  <input value="#995500" type="color"></input>
+</div>
+<div class="pants-colour">
+  <label>Pants colour</label>
+  <input value="#995500" type="color"></input>
+</div>
+<div class="belt-colour">
+  <label>Belt colour</label>
+  <input value="#663300" type="color"></input>
+</div>
+<div class="buckle-colour">
+  <label>Belt buckle colour</label>
+  <input value="#999999" type="color"></input>
+</div>
+<div class="hat-colour">
+  <label>Hat colour</label>
+  <input value="#995500" type="color"></input>
+</div>
+<div class="boots-colour">
+  <label>Boots colour</label>
+  <input value="#995500" type="color"></input>
+</div>
+<div class="weapon-colour">
+  <label>Weapon colour</label>
+  <input value="#999999" type="color"></input>
+</div>
+<div class="weapon-style">
+  <label>Weapon style</label>
+  <select>
+    <option value="knife">Knife</option>
+    <option value="sword" selected>Sword</option>
+    <option value="staff">Staff</option>
+    <option value="none">None</option>
+  </input>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var parts = "skin,eye,shirt,pants,belt,buckle,hat,boots".split(",");
+  var spriteImage = document.querySelector(".sprite-image");
+
+  var backgroundColour = document.querySelector(".background-colour input").value;
+
+  for (var p = 0; p < parts.length; p++) {
+    var part = parts[p];
+    window[part + "Colour"] = document.querySelector("." + part + "-colour input").value;
+    window[part + "Data"] = getDataFromImage("." + part);
+  }
+
+  var weaponStyle = document.querySelector(".weapon-style select").value;
+  var weaponColour = document.querySelector(".weapon-colour input").value;
+  var weaponData = [];
+  if (weaponStyle !== "none") {
+    weaponData = getDataFromImage("." + weaponStyle);
+  }
+
+
+  var canvas = document.createElement("canvas");
+  canvas.height = 8;
+  canvas.width = 8;
+  var ctx = canvas.getContext("2d");
+
+  function getDataFromImage(imgSelector) {
+    var img = document.querySelector(imgSelector);
+    var thisCanvas = document.createElement("canvas");
+    thisCanvas.height = 8;
+    thisCanvas.width = 8;
+    var thisCtx = thisCanvas.getContext("2d");
+    thisCtx.drawImage(img, 0, 0, 8, 8);
+    var pixelData = thisCtx.getImageData(0, 0, 8, 8);
+    var data = pixelData.data;
+    return data;
+  }
+
+  function darken(colour) {
+    var darker = "#";
+    var depth = 1;
+
+    for (var i = 1; i < colour.length; i+=2) {
+      var step = colour[i] + colour[i+1];
+      if (step === "00") {
+        depth++;
+      }
+    }
+
+    for (var i = 1; i < colour.length; i++) {
+      var working = colour[i];
+      working = parseInt(working, 16);
+      for (var d = 0; d < depth; d++) {
+        if (working > 0) {
+          working-=1;
+        }
+      }
+      working = working.toString(16);
+      darker += working.toString(16);
+    }
+    return darker;
+  }
+
+  function drawPixelsFromData(fillStyle, pixelData) {
+    var light = fillStyle;
+    var dark = darken(fillStyle);
+
+    for(var y = 0; y < 8; y++) {
+      for(var x = 0; x < 8; x++) {
+        if (pixelData[((8 * y) + x) * 4] === 125) {
+          ctx.fillStyle = light;
+          ctx.fillRect(x, y, 1, 1);
+        }
+        if (pixelData[((8 * y) + x) * 4] === 0) {
+          ctx.fillStyle = dark;
+          ctx.fillRect(x, y, 1, 1);
+        }
+      }
+    }
+  }
+
+  document.querySelector(".background-colour input").addEventListener("change", function() {
+    backgroundColour = this.value;
+    render();
+  });
+
+  document.querySelector(".weapon-colour input").addEventListener("change", function() {
+    weaponColour = this.value;
+    render();
+  });
+
+  document.querySelector(".weapon-style select").addEventListener("change", function() {
+    weaponStyle = this.value;
+    if (weaponStyle !== "none") {
+      weaponData = getDataFromImage("." + weaponStyle);
+    }
+    render();
+  });
+
+  parts.forEach( function(part) {
+    document.querySelector("." + part + "-colour input").addEventListener("change", function() {
+      window[part + "Colour"] = this.value;
+      render();
+    });
+    window["draw" + part] = function() {
+      drawPixelsFromData(window[part + "Colour"], window[part + "Data"]);
+    };
+  });
+
+  function drawBackground() {
+    ctx.fillStyle = backgroundColour;
+    ctx.fillRect(0, 0, 8, 8);
+  }
+
+  function drawWeapon() {
+    if (weaponStyle !== "none") {
+      drawPixelsFromData(weaponColour, weaponData);
+    }
+  }
+
+  function render() {
+    drawBackground();
+    parts.forEach( function(part) {
+      window["draw" + part]();
+    });
+    drawWeapon();
+    spriteImage.src = canvas.toDataURL();
+  }
+  render();
+});
+</script>
