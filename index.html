@@ -60,12 +60,19 @@
     <option value="sword" selected>Sword</option>
     <option value="staff">Staff</option>
     <option value="none">None</option>
-  </input>
+  </select>
+</div>
+<div class="shirt-style">
+  <label>Shirt style</label>
+  <select>
+    <option value="robe">Robe</option>
+    <option value="shirt" selected>Normal</option>
+  </select>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  var images = "skin,eye,shirt,pants,belt,buckle,hat,boots,sword,knife,staff".split(",");
+  var images = "skin,eye,shirt,pants,belt,buckle,hat,boots,sword,knife,staff,robe".split(",");
   var loadingImages = images.length;
   images.forEach( function(image) {
     var img = document.createElement("img");
@@ -82,15 +89,21 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   function ready() {
-    var parts = "skin,eye,shirt,pants,belt,buckle,hat,boots".split(",");
+    var parts = "skin,eye,pants,belt,buckle,hat,boots,shirt".split(",");
     var spriteImage = document.querySelector(".sprite-image");
 
     var backgroundColour = document.querySelector(".background-colour input").value;
+    window.shirtStyle = document.querySelector(".shirt-style select").value;
 
     for (var p = 0; p < parts.length; p++) {
       var part = parts[p];
       window[part + "Colour"] = document.querySelector("." + part + "-colour input").value;
-      window[part + "Data"] = getDataFromImage("." + part);
+      if (window[part + "Style"]) {
+        console.log("." + window[part + "Style"]);
+        window[part + "Data"] = getDataFromImage("." + window[part + "Style"]);
+      } else {
+        window[part + "Data"] = getDataFromImage("." + part);
+      }
     }
 
     var weaponStyle = document.querySelector(".weapon-style select").value;
@@ -99,6 +112,11 @@ document.addEventListener("DOMContentLoaded", function() {
     if (weaponStyle !== "none") {
       weaponData = getDataFromImage("." + weaponStyle);
     }
+    //var weaponColour = document.querySelector(".weapon-colour input").value;
+    /*var weaponData = [];
+    if (weaponStyle !== "none") {
+      weaponData = getDataFromImage("." + weaponStyle);
+    }*/
 
 
     var canvas = document.createElement("canvas");
@@ -178,6 +196,12 @@ document.addEventListener("DOMContentLoaded", function() {
       render();
     });
 
+    document.querySelector(".shirt-style select").addEventListener("change", function() {
+      window.shirtStyle = this.value;
+      window["shirtData"] = getDataFromImage("." + window["shirtStyle"]);
+      render();
+    });
+
     parts.forEach( function(part) {
       document.querySelector("." + part + "-colour input").addEventListener("change", function() {
         window[part + "Colour"] = this.value;
@@ -190,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function drawBackground() {
       ctx.fillStyle = backgroundColour;
-      ctx.fillRect(0, 0, 8, 8);
+      ctx.fillRect(0, 0, 64, 64);
     }
 
     function drawWeapon() {
