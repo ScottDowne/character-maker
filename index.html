@@ -4,8 +4,8 @@
   width:64px;
 }
 .dudes img {
-
   margin-right:8px;
+  margin-bottom:8px;
 }
 .template {
   visibility: hidden;
@@ -62,6 +62,7 @@
     <option value="knife">Knife</option>
     <option value="sword" selected>Sword</option>
     <option value="staff">Staff</option>
+    <option value="walkingstick">Walking stick</option>
     <option value="none">None</option>
   </select>
 </div>
@@ -73,6 +74,30 @@
   </select>
 </div>
 
+<div class="beard-colour">
+  <label>Beard colour</label>
+  <input value="#FF5500" type="color"></input>
+</div>
+<div class="beard-style">
+  <label>Beard style</label>
+  <select>
+    <option value="beard">Yeah sure</option>
+    <option value="none" selected>None</option>
+  </select>
+</div>
+
+<div class="goggles-colour">
+  <label>Goggles colour</label>
+  <input value="#555555" type="color"></input>
+</div>
+<div class="goggles-style">
+  <label>Goggles style</label>
+  <select>
+    <option value="goggles">Yeah sure</option>
+    <option value="none" selected>None</option>
+  </select>
+</div>
+
 <button class="save-dude">save dude</button>
 <br>
 Other dudes
@@ -81,7 +106,7 @@ Other dudes
 <script>
 Parse.initialize("QKd4Bi5syX0TSnmdJefTaehNJrXa7M0Qweu5lAMt", "izFh0K1jsaX0jeZfWXKo1ZUSGkvuYTBmqREhQ4Ns");
 document.addEventListener("DOMContentLoaded", function() {
-  var images = "skin,eye,shirt,pants,belt,buckle,hat,boots,sword,knife,staff,robe".split(",");
+  var images = "skin,eye,shirt,pants,belt,buckle,hat,boots,sword,knife,staff,robe,beard,walkingstick,goggles".split(",");
   var loadingImages = images.length;
   images.forEach( function(image) {
     var img = document.createElement("img");
@@ -120,6 +145,16 @@ document.addEventListener("DOMContentLoaded", function() {
     if (weaponStyle !== "none") {
       weaponData = getDataFromImage("." + weaponStyle);
     }
+
+    var beardStyle = document.querySelector(".beard-style select").value;
+    var beardColour = document.querySelector(".beard-colour input").value;
+    var beardData = getDataFromImage(".beard");
+    var gogglesStyle = document.querySelector(".goggles-style select").value;
+    var gogglesColour = document.querySelector(".goggles-colour input").value;
+    var gogglesData = getDataFromImage(".goggles");
+    //if (beardStyle !== "none") {
+    //  weaponData = getDataFromImage("." + weaponStyle);
+    //}
     //var weaponColour = document.querySelector(".weapon-colour input").value;
     /*var weaponData = [];
     if (weaponStyle !== "none") {
@@ -204,6 +239,26 @@ document.addEventListener("DOMContentLoaded", function() {
       render();
     });
 
+    document.querySelector(".beard-colour input").addEventListener("change", function() {
+      beardColour = this.value;
+      render();
+    });
+
+    document.querySelector(".beard-style select").addEventListener("change", function() {
+      beardStyle = this.value;
+      render();
+    });
+
+    document.querySelector(".goggles-colour input").addEventListener("change", function() {
+      gogglesColour = this.value;
+      render();
+    });
+
+    document.querySelector(".goggles-style select").addEventListener("change", function() {
+      gogglesStyle = this.value;
+      render();
+    });
+
     document.querySelector(".shirt-style select").addEventListener("change", function() {
       window.shirtStyle = this.value;
       window["shirtData"] = getDataFromImage("." + window["shirtStyle"]);
@@ -231,12 +286,27 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
 
+    function drawBeard() {
+      if (beardStyle === "beard") {
+        drawPixelsFromData(beardColour, beardData);
+      }
+    }
+
+    function drawGoggles() {
+      if (gogglesStyle === "goggles") {
+        drawPixelsFromData(gogglesColour, gogglesData);
+      }
+    }
+
     function render() {
       drawBackground();
       parts.forEach( function(part) {
         window["draw" + part]();
       });
+      // I need goggles under hats.
+      drawGoggles();
       drawWeapon();
+      drawBeard();
       spriteImage.src = canvas.toDataURL();
     }
     render();
