@@ -11,102 +11,145 @@
   visibility: hidden;
   display: none;
 }
+span {
+  margin-right: 128px;
+  display:inline-block;
+}
+label {
+  width: 128px;
+  display: inline-block;
+}
 </style>
 <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
 <img class="sprite-image"></img>
 <br>
-
-<div class="background-colour">
-  <label>Background colour</label>
-  <input value="#ffffff" type="color"></input>
-</div>
-<div class="skin-colour">
-  <label>Skin colour</label>
-  <input value="#000000" type="color"></input>
-</div>
-<div class="eye-colour">
-  <label>Eye colour</label>
-  <input value="#ffff00" type="color"></input>
-</div>
-<div class="shirt-colour">
-  <label>Shirt colour</label>
-  <input value="#995500" type="color"></input>
-</div>
-<div class="pants-colour">
-  <label>Pants colour</label>
-  <input value="#995500" type="color"></input>
-</div>
-<div class="belt-colour">
-  <label>Belt colour</label>
-  <input value="#663300" type="color"></input>
-</div>
-<div class="buckle-colour">
-  <label>Belt buckle colour</label>
-  <input value="#999999" type="color"></input>
-</div>
-<div class="hat-colour">
-  <label>Hat colour</label>
-  <input value="#995500" type="color"></input>
-</div>
-<div class="boots-colour">
-  <label>Boots colour</label>
-  <input value="#995500" type="color"></input>
-</div>
-<div class="weapon-colour">
-  <label>Weapon colour</label>
-  <input value="#999999" type="color"></input>
-</div>
-<div class="weapon-style">
-  <label>Weapon style</label>
-  <select>
-    <option value="knife">Knife</option>
-    <option value="sword" selected>Sword</option>
-    <option value="staff">Staff</option>
-    <option value="walkingstick">Walking stick</option>
-    <option value="none">None</option>
-  </select>
-</div>
-<div class="shirt-style">
-  <label>Shirt style</label>
-  <select>
-    <option value="robe">Robe</option>
-    <option value="shirt" selected>Normal</option>
-  </select>
-</div>
-
-<div class="beard-colour">
-  <label>Beard colour</label>
-  <input value="#FF5500" type="color"></input>
-</div>
-<div class="beard-style">
-  <label>Beard style</label>
-  <select>
-    <option value="beard">Yeah sure</option>
-    <option value="none" selected>None</option>
-  </select>
-</div>
-
-<div class="goggles-colour">
-  <label>Goggles colour</label>
-  <input value="#555555" type="color"></input>
-</div>
-<div class="goggles-style">
-  <label>Goggles style</label>
-  <select>
-    <option value="goggles">Yeah sure</option>
-    <option value="none" selected>None</option>
-  </select>
-</div>
-
-<button class="save-dude">save dude</button>
 <br>
-Other dudes
+<button class="save-dude">Publish Character</button>
+<br>
+<br>
+
+<span>
+  <div class="background-colour">
+    <label>Background colour</label>
+    <input value="#ffffff" type="color"></input>
+  </div>
+  <div class="skin-colour">
+    <label>Skin colour</label>
+    <input value="#000000" type="color"></input>
+  </div>
+  <div class="eye-colour">
+    <label>Eye colour</label>
+    <input value="#ffff00" type="color"></input>
+  </div>
+  <div class="shirt-colour">
+    <label>Shirt colour</label>
+    <input value="#995500" type="color"></input>
+  </div>
+  <div class="pants-colour">
+    <label>Pants colour</label>
+    <input value="#995500" type="color"></input>
+  </div>
+  <div class="belt-colour">
+    <label>Belt colour</label>
+    <input value="#663300" type="color"></input>
+  </div>
+  <div class="buckle-colour">
+    <label>Belt buckle colour</label>
+    <input value="#999999" type="color"></input>
+  </div>
+  <div class="hat-colour">
+    <label>Hat colour</label>
+    <input value="#995500" type="color"></input>
+  </div>
+  <div class="hat-style">
+    <label>Hat style</label>
+    <select>
+      <option value="pointy" selected>Pointy</option>
+      <option value="none">None</option>
+      <option value="hood">Hood</option>
+      <option value="helm">Helm</option>
+    </select>
+  </div>
+  <div class="boots-colour">
+    <label>Boots colour</label>
+    <input value="#995500" type="color"></input>
+  </div>
+</span>
+<span>
+  <div class="weapon-colour">
+    <label>Weapon colour</label>
+    <input value="#999999" type="color"></input>
+  </div>
+  <div class="weapon-style">
+    <label>Weapon style</label>
+    <select>
+      <option value="knife">Knife</option>
+      <option value="sword" selected>Sword</option>
+      <option value="staff">Staff</option>
+      <option value="walkingstick">Walking stick</option>
+      <option value="none">None</option>
+    </select>
+  </div>
+  <div class="shirt-style">
+    <label>Shirt style</label>
+    <select>
+      <option value="robe">Robe</option>
+      <option value="shirt" selected>Normal</option>
+    </select>
+  </div>
+
+  <div class="beard-colour">
+    <label>Beard colour</label>
+    <input value="#FF5500" type="color"></input>
+  </div>
+  <div class="beard-style">
+    <label>Beard style</label>
+    <select>
+      <option value="beard">Yeah sure</option>
+      <option value="none" selected>None</option>
+    </select>
+  </div>
+  <div class="goggles-colour">
+    <label>Goggles colour</label>
+    <input value="#555555" type="color"></input>
+  </div>
+  <div class="goggles-style">
+    <label>Goggles style</label>
+    <select>
+      <option value="goggles">Yeah sure</option>
+      <option value="none" selected>None</option>
+    </select>
+  </div>
+  <div class="hair-colour">
+    <label>Hair colour</label>
+    <input value="#FF5500" type="color"></input>
+  </div>
+  <div class="hair-style">
+    <label>Short hair style</label>
+    <select>
+      <option value="jeanluc">The Jean-Luc</option>
+      <option value="bald">Bald</option>
+      <option value="fullhair" selected>Full</option>
+    </select>
+  </div>
+  <div class="longhair-style">
+    <label>Long hair style</label>
+    <select>
+      <option value="long">Long</option>
+      <option value="short" selected>Short</option>
+    </select>
+  </div>
+</span>
+
+<br>
+<br>
+Published Characters
 <div class="dudes"></div>
 
 <script>
 Parse.initialize("QKd4Bi5syX0TSnmdJefTaehNJrXa7M0Qweu5lAMt", "izFh0K1jsaX0jeZfWXKo1ZUSGkvuYTBmqREhQ4Ns");
 document.addEventListener("DOMContentLoaded", function() {
-  var images = "skin,eye,shirt,pants,belt,buckle,hat,boots,sword,knife,staff,robe,beard,walkingstick,goggles".split(",");
+  var images = "skin,eye,shirt,pants,belt,buckle,pointy,boots,sword,knife,staff,robe,beard,walkingstick,goggles,helm,hood,longhair,jeanluc,fullhair".split(",");
   var loadingImages = images.length;
   images.forEach( function(image) {
     var img = document.createElement("img");
@@ -123,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   function ready() {
-    var parts = "skin,eye,pants,belt,buckle,hat,boots,shirt".split(",");
+    var parts = "skin,eye,pants,belt,buckle,boots,shirt".split(",");
     var spriteImage = document.querySelector(".sprite-image");
 
     var backgroundColour = document.querySelector(".background-colour input").value;
@@ -149,9 +192,26 @@ document.addEventListener("DOMContentLoaded", function() {
     var beardStyle = document.querySelector(".beard-style select").value;
     var beardColour = document.querySelector(".beard-colour input").value;
     var beardData = getDataFromImage(".beard");
+
+    var hairStyle = document.querySelector(".hair-style select").value;
+    var hairColour = document.querySelector(".hair-colour input").value;
+    var hairData = [];
+    if (hairStyle !== "none") {
+      hairData = getDataFromImage("." + hairStyle);
+    }
+
+    var longHairStyle = document.querySelector(".longhair-style select").value;
+    var longHairData = getDataFromImage(".longhair");
+
     var gogglesStyle = document.querySelector(".goggles-style select").value;
     var gogglesColour = document.querySelector(".goggles-colour input").value;
     var gogglesData = getDataFromImage(".goggles");
+    var hatStyle = document.querySelector(".hat-style select").value;
+    var hatColour = document.querySelector(".hat-colour input").value;
+    var hatData = [];
+    if (hatStyle !== "none") {
+      hatData = getDataFromImage("." + hatStyle);
+    }
     //if (beardStyle !== "none") {
     //  weaponData = getDataFromImage("." + weaponStyle);
     //}
@@ -239,6 +299,33 @@ document.addEventListener("DOMContentLoaded", function() {
       render();
     });
 
+    document.querySelector(".hair-colour input").addEventListener("change", function() {
+      hairColour = this.value;
+      render();
+    });
+
+    document.querySelector(".hair-style select").addEventListener("change", function() {
+      hairStyle = this.value;
+      if (hairStyle !== "bald") {
+        hairData = getDataFromImage("." + hairStyle);
+      }
+      render();
+    });
+
+
+    document.querySelector(".hat-colour input").addEventListener("change", function() {
+      hatColour = this.value;
+      render();
+    });
+
+    document.querySelector(".hat-style select").addEventListener("change", function() {
+      hatStyle = this.value;
+      if (hatStyle !== "none") {
+        hatData = getDataFromImage("." + hatStyle);
+      }
+      render();
+    });
+
     document.querySelector(".beard-colour input").addEventListener("change", function() {
       beardColour = this.value;
       render();
@@ -246,6 +333,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelector(".beard-style select").addEventListener("change", function() {
       beardStyle = this.value;
+      render();
+    });
+
+    document.querySelector(".longhair-style select").addEventListener("change", function() {
+      longHairStyle = this.value;
       render();
     });
 
@@ -286,6 +378,18 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
 
+    function drawHat() {
+      if (hatStyle !== "none") {
+        drawPixelsFromData(hatColour, hatData);
+      }
+    }
+
+    function drawHair() {
+      if (hairStyle !== "bald") {
+        drawPixelsFromData(hairColour, hairData);
+      }
+    }
+
     function drawBeard() {
       if (beardStyle === "beard") {
         drawPixelsFromData(beardColour, beardData);
@@ -298,6 +402,12 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
 
+    function drawLongHair() {
+      if (longHairStyle === "long") {
+        drawPixelsFromData(hairColour, longHairData);
+      }
+    }
+
     function render() {
       drawBackground();
       parts.forEach( function(part) {
@@ -305,8 +415,12 @@ document.addEventListener("DOMContentLoaded", function() {
       });
       // I need goggles under hats.
       drawGoggles();
-      drawWeapon();
+      drawLongHair();
+      drawHair();
       drawBeard();
+      drawHat();
+      drawWeapon();
+
       spriteImage.src = canvas.toDataURL();
     }
     render();
