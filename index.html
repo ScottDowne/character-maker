@@ -8,6 +8,9 @@
   margin-right:8px;
   margin-bottom:8px;
 }
+.dudes img.remixable {
+  cursor:pointer;
+}
 .template {
   visibility: hidden;
   display: none;
@@ -30,10 +33,6 @@ label {
 <br>
 
 <span>
-  <div class="background-colour">
-    <label>Background colour</label>
-    <input value="#ffffff" type="color"></input>
-  </div>
   <div class="skin-colour">
     <label>Skin colour</label>
     <input value="#000000" type="color"></input>
@@ -45,6 +44,13 @@ label {
   <div class="shirt-colour">
     <label>Shirt colour</label>
     <input value="#995500" type="color"></input>
+  </div>
+  <div class="shirt-style">
+    <label>Shirt style</label>
+    <select>
+      <option value="robe">Robe</option>
+      <option value="shirt" selected>Normal</option>
+    </select>
   </div>
   <div class="pants-colour">
     <label>Pants colour</label>
@@ -91,25 +97,7 @@ label {
       <option value="none">None</option>
     </select>
   </div>
-  <div class="shirt-style">
-    <label>Shirt style</label>
-    <select>
-      <option value="robe">Robe</option>
-      <option value="shirt" selected>Normal</option>
-    </select>
-  </div>
 
-  <div class="beard-colour">
-    <label>Beard colour</label>
-    <input value="#FF5500" type="color"></input>
-  </div>
-  <div class="beard-style">
-    <label>Beard style</label>
-    <select>
-      <option value="beard">Yeah sure</option>
-      <option value="none" selected>None</option>
-    </select>
-  </div>
   <div class="goggles-colour">
     <label>Goggles colour</label>
     <input value="#555555" type="color"></input>
@@ -118,6 +106,17 @@ label {
     <label>Goggles style</label>
     <select>
       <option value="goggles">Yeah sure</option>
+      <option value="none" selected>None</option>
+    </select>
+  </div>
+  <div class="beard-colour">
+    <label>Beard colour</label>
+    <input value="#FF5500" type="color"></input>
+  </div>
+  <div class="beard-style">
+    <label>Beard style</label>
+    <select>
+      <option value="beard">Yeah sure</option>
       <option value="none" selected>None</option>
     </select>
   </div>
@@ -140,12 +139,19 @@ label {
       <option value="short" selected>Short</option>
     </select>
   </div>
+  <div class="background-colour">
+    <label>Background colour</label>
+    <input value="#ffffff" type="color"></input>
+  </div>
 </span>
 
 <br>
 <br>
+<br>
 Published Characters
 <div class="dudes"></div>
+<br>
+<br>
 Character Archive
 <div class="archive"></div>
 
@@ -233,198 +239,232 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     var playerData = {};
+    var beardData = [];
+    var longHairData = [];
+    var gogglesData = [];
+    var skinData = [];
+    var eyeData = [];
+    var pantsData = [];
+    var beltData = [];
+    var buckleData = [];
+    var bootsData = [];
+    var hatData = [];
+    var hairData = [];
+    var weaponData = [];
+    var shirtData = [];
+
     playerData.backgroundColour = document.querySelector(".background-colour input").value;
-    playerData.skinData = getDataFromImage(".skin");
     playerData.skinColour = document.querySelector(".skin-colour input").value;
-    playerData.eyeData = getDataFromImage(".eye");
     playerData.eyeColour = document.querySelector(".eye-colour input").value;
-    playerData.pantsData = getDataFromImage(".pants");
     playerData.pantsColour = document.querySelector(".pants-colour input").value;
-    playerData.beltData = getDataFromImage(".belt");
     playerData.beltColour = document.querySelector(".belt-colour input").value;
-    playerData.buckleData = getDataFromImage(".buckle");
     playerData.buckleColour = document.querySelector(".buckle-colour input").value;
-    playerData.bootsData = getDataFromImage(".boots");
     playerData.bootsColour = document.querySelector(".boots-colour input").value;
     playerData.shirtColour = document.querySelector(".shirt-colour input").value;
     playerData.shirtStyle = document.querySelector(".shirt-style select").value;
-    playerData.shirtData = [];
-    if (playerData.shirtStyle) {
-      playerData.shirtData = getDataFromImage("." + playerData.shirtStyle);
-    } else {
-      playerData.shirtData = getDataFromImage(".shirt");
-    }
     playerData.weaponStyle = document.querySelector(".weapon-style select").value;
     playerData.weaponColour = document.querySelector(".weapon-colour input").value;
-    playerData.weaponData = [];
-    if (playerData.weaponStyle !== "none") {
-      playerData.weaponData = getDataFromImage("." + playerData.weaponStyle);
-    }
     playerData.beardStyle = document.querySelector(".beard-style select").value;
     playerData.beardColour = document.querySelector(".beard-colour input").value;
-    playerData.beardData = getDataFromImage(".beard");
     playerData.hairStyle = document.querySelector(".hair-style select").value;
     playerData.hairColour = document.querySelector(".hair-colour input").value;
-    playerData.hairData = [];
-    if (playerData.hairStyle !== "none") {
-      playerData.hairData = getDataFromImage("." + playerData.hairStyle);
-    }
     playerData.longHairStyle = document.querySelector(".longhair-style select").value;
-    playerData.longHairData = getDataFromImage(".longhair");
     playerData.gogglesStyle = document.querySelector(".goggles-style select").value;
     playerData.gogglesColour = document.querySelector(".goggles-colour input").value;
-    playerData.gogglesData = getDataFromImage(".goggles");
     playerData.hatStyle = document.querySelector(".hat-style select").value;
     playerData.hatColour = document.querySelector(".hat-colour input").value;
-    playerData.hatData = [];
-    if (playerData.hatStyle !== "none") {
-      playerData.hatData = getDataFromImage("." + playerData.hatStyle);
+
+    function setDataArrays() {
+      beardData = getDataFromImage(".beard");
+      longHairData = getDataFromImage(".longhair");
+      gogglesData = getDataFromImage(".goggles");
+      skinData = getDataFromImage(".skin");
+      eyeData = getDataFromImage(".eye");
+      pantsData = getDataFromImage(".pants");
+      beltData = getDataFromImage(".belt");
+      buckleData = getDataFromImage(".buckle");
+      bootsData = getDataFromImage(".boots");
+      if (playerData.hatStyle !== "none") {
+        hatData = getDataFromImage("." + playerData.hatStyle);
+      }
+      if (playerData.hairStyle !== "bald") {
+        hairData = getDataFromImage("." + playerData.hairStyle);
+      }
+      if (playerData.weaponStyle !== "none") {
+        weaponData = getDataFromImage("." + playerData.weaponStyle);
+      }
+      if (playerData.shirtStyle) {
+        shirtData = getDataFromImage("." + playerData.shirtStyle);
+      } else {
+        shirtData = getDataFromImage(".shirt");
+      }
     }
+    setDataArrays();
 
     document.querySelector(".background-colour input").addEventListener("change", function() {
       playerData.backgroundColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".weapon-colour input").addEventListener("change", function() {
       playerData.weaponColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".weapon-style select").addEventListener("change", function() {
       playerData.weaponStyle = this.value;
       if (playerData.weaponStyle !== "none") {
-        playerData.weaponData = getDataFromImage("." + playerData.weaponStyle);
+        weaponData = getDataFromImage("." + playerData.weaponStyle);
       }
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".hair-colour input").addEventListener("change", function() {
       playerData.hairColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".hair-style select").addEventListener("change", function() {
       playerData.hairStyle = this.value;
       if (playerData.hairStyle !== "bald") {
-        playerData.hairData = getDataFromImage("." + playerData.hairStyle);
+        hairData = getDataFromImage("." + playerData.hairStyle);
       }
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".hat-colour input").addEventListener("change", function() {
       playerData.hatColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".hat-style select").addEventListener("change", function() {
       playerData.hatStyle = this.value;
       if (playerData.hatStyle !== "none") {
-        playerData.hatData = getDataFromImage("." + playerData.hatStyle);
+        hatData = getDataFromImage("." + playerData.hatStyle);
       }
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".beard-colour input").addEventListener("change", function() {
       playerData.beardColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".beard-style select").addEventListener("change", function() {
       playerData.beardStyle = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".longhair-style select").addEventListener("change", function() {
       playerData.longHairStyle = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".goggles-colour input").addEventListener("change", function() {
       playerData.gogglesColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".goggles-style select").addEventListener("change", function() {
       playerData.gogglesStyle = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".shirt-style select").addEventListener("change", function() {
       playerData.shirtStyle = this.value;
-      playerData.shirtData = getDataFromImage("." + playerData.shirtStyle);
-      spriteImage.src = render(playerData);
+      shirtData = getDataFromImage("." + playerData.shirtStyle);
+      render(playerData);
     });
     document.querySelector(".skin-colour input").addEventListener("change", function() {
       playerData.skinColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
-
     document.querySelector(".eye-colour input").addEventListener("change", function() {
       playerData.eyeColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".pants-colour input").addEventListener("change", function() {
       playerData.pantsColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".belt-colour input").addEventListener("change", function() {
       playerData.beltColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".buckle-colour input").addEventListener("change", function() {
       playerData.buckleColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".boots-colour input").addEventListener("change", function() {
       playerData.bootsColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
     document.querySelector(".shirt-colour input").addEventListener("change", function() {
       playerData.shirtColour = this.value;
-      spriteImage.src = render(playerData);
+      render(playerData);
     });
-    function drawShirt(data) {
-      drawPixelsFromData(data.shirtColour, data.shirtData);
-    }
-    function drawPants(data) {
-      drawPixelsFromData(data.pantsColour, data.pantsData);
-    }
-    function drawBelt(data) {
-      drawPixelsFromData(data.beltColour, data.beltData);
-    }
-    function drawBuckle(data) {
-      drawPixelsFromData(data.buckleColour, data.buckleData);
-    }
-    function drawEye(data) {
-      drawPixelsFromData(data.eyeColour, data.eyeData);
-    }
+
     function drawBackground(data) {
+      document.querySelector(".background-colour input").value = data.backgroundColour;
       ctx.fillStyle = data.backgroundColour;
       ctx.fillRect(0, 0, 64, 64);
     }
+    function drawShirt(data) {
+      document.querySelector(".shirt-colour input").value = data.shirtColour;
+      drawPixelsFromData(data.shirtColour, shirtData);
+    }
+    function drawPants(data) {
+      document.querySelector(".pants-colour input").value = data.pantsColour;
+      drawPixelsFromData(data.pantsColour, pantsData);
+    }
+    function drawBelt(data) {
+      document.querySelector(".belt-colour input").value = data.beltColour;
+      drawPixelsFromData(data.beltColour, beltData);
+    }
+    function drawBuckle(data) {
+      document.querySelector(".buckle-colour input").value = data.buckleColour;
+      drawPixelsFromData(data.buckleColour, buckleData);
+    }
+    function drawEye(data) {
+      document.querySelector(".eye-colour input").value = data.eyeColour;
+      drawPixelsFromData(data.eyeColour, eyeData);
+    }
     function drawSkin(data) {
-      drawPixelsFromData(data.skinColour, data.skinData);
+      document.querySelector(".skin-colour input").value = data.skinColour;
+      drawPixelsFromData(data.skinColour, skinData);
     }
     function drawWeapon(data) {
+      document.querySelector(".weapon-colour input").value = data.weaponColour;
+      document.querySelector(".weapon-style select").value = data.weaponStyle;
       if (data.weaponStyle !== "none") {
-        drawPixelsFromData(data.weaponColour, data.weaponData);
+        drawPixelsFromData(data.weaponColour, weaponData);
       }
     }
     function drawBoots(data) {
-      drawPixelsFromData(data.bootsColour, data.bootsData);
+      document.querySelector(".boots-colour input").value = data.bootsColour;
+      drawPixelsFromData(data.bootsColour, bootsData);
     }
     function drawHat(data) {
+      document.querySelector(".hat-colour input").value = data.hatColour;
+      document.querySelector(".hat-style select").value = data.hatStyle;
       if (data.hatStyle !== "none") {
-        drawPixelsFromData(data.hatColour, data.hatData);
+        drawPixelsFromData(data.hatColour, hatData);
       }
     }
     function drawHair(data) {
+      document.querySelector(".hair-colour input").value = data.hairColour;
+      document.querySelector(".hair-style select").value = data.hairStyle;
       if (data.hairStyle !== "bald") {
-        drawPixelsFromData(data.hairColour, data.hairData);
+        drawPixelsFromData(data.hairColour, hairData);
       }
     }
     function drawBeard(data) {
+      document.querySelector(".beard-colour input").value = data.beardColour;
+      document.querySelector(".beard-style select").value = data.beardStyle;
       if (data.beardStyle === "beard") {
-        drawPixelsFromData(data.beardColour, data.beardData);
+        drawPixelsFromData(data.beardColour, beardData);
       }
     }
     function drawGoggles(data) {
+      document.querySelector(".goggles-colour input").value = data.gogglesColour;
+      document.querySelector(".goggles-style select").value = data.gogglesStyle;
       if (data.gogglesStyle === "goggles") {
-        drawPixelsFromData(data.gogglesColour, data.gogglesData);
+        drawPixelsFromData(data.gogglesColour, gogglesData);
       }
     }
     function drawLongHair(data) {
+      document.querySelector(".hair-colour input").value = data.hairColour;
+      document.querySelector(".longhair-style select").value = data.longHairStyle;
       if (data.longHairStyle === "long") {
-        drawPixelsFromData(data.hairColour, data.longHairData);
+        drawPixelsFromData(data.hairColour, longHairData);
       }
     }
 
@@ -443,27 +483,31 @@ document.addEventListener("DOMContentLoaded", function() {
       drawBeard(data);
       drawHat(data);
       drawWeapon(data);
-      return canvas.toDataURL();
+      spriteImage.src = canvas.toDataURL();
     }
-    spriteImage.src = render(playerData);
+    render(playerData);
 
     function generateDudes() {
       var dudes = document.querySelector(".dudes");
       dudes.innerHTML = "";
-      var TestObject = Parse.Object.extend("DudesTest");
-      //var testObject = new TestObject();
+      var TestObject = Parse.Object.extend("DudesTestRemix");
       var query = new Parse.Query(TestObject);
-      //console.log(testObject.get("src"));
       query.find({
         success: function(results) {
-          console.log("Successfully retrieved " + results.length + " dudes.");
+          console.log("Successfully retrieved " + results.length + " characters.");
           // Do something with the returned Parse.Object values
-          for (var i = results.length-1; i >= 0; i--) {
-            var object = results[i];
+          results.reverse();
+          results.forEach(function(object) {
             var img = document.createElement("img");
             img.src = object.get("src");
+            img.classList.add("remixable");
             dudes.appendChild(img);
-          }
+            img.addEventListener("click", function() {
+              playerData = object.get("data");
+              setDataArrays();
+              render(playerData);
+            });
+          });
         },
         error: function(error) {
           console.log("Error: " + error.code + " " + error.message);
@@ -477,7 +521,7 @@ document.addEventListener("DOMContentLoaded", function() {
       var query = new Parse.Query(TestObject);
       query.find({
         success: function(results) {
-          console.log("Successfully retrieved " + results.length + " dudes.");
+          console.log("Successfully retrieved " + results.length + " characters from archive.");
           // Do something with the returned Parse.Object values
           for (var i = results.length-1; i >= 0; i--) {
             var object = results[i];
@@ -494,9 +538,9 @@ document.addEventListener("DOMContentLoaded", function() {
     generateArchive();
     generateDudes();
     document.querySelector(".save-dude").addEventListener("click", function() {
-      var TestObject = Parse.Object.extend("DudesTest");
+      var TestObject = Parse.Object.extend("DudesTestRemix");
       var testObject = new TestObject();
-      testObject.save({src: spriteImage.src}).then(function(object) {
+      testObject.save({src: spriteImage.src, data: playerData}).then(function(object) {
         generateDudes();
       });
 
