@@ -283,169 +283,169 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelector(".background-colour input").addEventListener("change", function() {
       playerData.backgroundColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".weapon-colour input").addEventListener("change", function() {
       playerData.weaponColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".weapon-style select").addEventListener("change", function() {
       playerData.weaponStyle = this.value;
       if (playerData.weaponStyle !== "none") {
         playerData.weaponData = getDataFromImage("." + playerData.weaponStyle);
       }
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".hair-colour input").addEventListener("change", function() {
       playerData.hairColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".hair-style select").addEventListener("change", function() {
       playerData.hairStyle = this.value;
       if (playerData.hairStyle !== "bald") {
         playerData.hairData = getDataFromImage("." + playerData.hairStyle);
       }
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".hat-colour input").addEventListener("change", function() {
       playerData.hatColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".hat-style select").addEventListener("change", function() {
       playerData.hatStyle = this.value;
       if (playerData.hatStyle !== "none") {
         playerData.hatData = getDataFromImage("." + playerData.hatStyle);
       }
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".beard-colour input").addEventListener("change", function() {
       playerData.beardColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".beard-style select").addEventListener("change", function() {
       playerData.beardStyle = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".longhair-style select").addEventListener("change", function() {
       playerData.longHairStyle = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".goggles-colour input").addEventListener("change", function() {
       playerData.gogglesColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".goggles-style select").addEventListener("change", function() {
       playerData.gogglesStyle = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".shirt-style select").addEventListener("change", function() {
       playerData.shirtStyle = this.value;
       playerData.shirtData = getDataFromImage("." + playerData.shirtStyle);
-      render();
+      spriteImage.src = render(playerData);
     });
     document.querySelector(".skin-colour input").addEventListener("change", function() {
       playerData.skinColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
 
-    function drawSkin() {
-      drawPixelsFromData(playerData.skinColour, playerData.skinData);
-    };
     document.querySelector(".eye-colour input").addEventListener("change", function() {
       playerData.eyeColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
-    function drawEye() {
-      drawPixelsFromData(playerData.eyeColour, playerData.eyeData);
-    };
     document.querySelector(".pants-colour input").addEventListener("change", function() {
       playerData.pantsColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
-    function drawPants() {
-      drawPixelsFromData(playerData.pantsColour, playerData.pantsData);
-    };
     document.querySelector(".belt-colour input").addEventListener("change", function() {
       playerData.beltColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
-    function drawBelt() {
-      drawPixelsFromData(playerData.beltColour, playerData.beltData);
-    };
     document.querySelector(".buckle-colour input").addEventListener("change", function() {
       playerData.buckleColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
-    function drawBuckle() {
-      drawPixelsFromData(playerData.buckleColour, playerData.buckleData);
-    };
     document.querySelector(".boots-colour input").addEventListener("change", function() {
       playerData.bootsColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
-    function drawBoots() {
-      drawPixelsFromData(playerData.bootsColour, playerData.bootsData);
-    };
     document.querySelector(".shirt-colour input").addEventListener("change", function() {
       playerData.shirtColour = this.value;
-      render();
+      spriteImage.src = render(playerData);
     });
-    function drawShirt() {
-      drawPixelsFromData(playerData.shirtColour, playerData.shirtData);
-    };
-    function drawBackground() {
-      ctx.fillStyle = playerData.backgroundColour;
+    function drawShirt(data) {
+      drawPixelsFromData(data.shirtColour, data.shirtData);
+    }
+    function drawPants(data) {
+      drawPixelsFromData(data.pantsColour, data.pantsData);
+    }
+    function drawBelt(data) {
+      drawPixelsFromData(data.beltColour, data.beltData);
+    }
+    function drawBuckle(data) {
+      drawPixelsFromData(data.buckleColour, data.buckleData);
+    }
+    function drawEye(data) {
+      drawPixelsFromData(data.eyeColour, data.eyeData);
+    }
+    function drawBackground(data) {
+      ctx.fillStyle = data.backgroundColour;
       ctx.fillRect(0, 0, 64, 64);
     }
-    function drawWeapon() {
-      if (playerData.weaponStyle !== "none") {
-        drawPixelsFromData(playerData.weaponColour, playerData.weaponData);
+    function drawSkin(data) {
+      drawPixelsFromData(data.skinColour, data.skinData);
+    }
+    function drawWeapon(data) {
+      if (data.weaponStyle !== "none") {
+        drawPixelsFromData(data.weaponColour, data.weaponData);
       }
     }
-    function drawHat() {
-      if (playerData.hatStyle !== "none") {
-        drawPixelsFromData(playerData.hatColour, playerData.hatData);
+    function drawBoots(data) {
+      drawPixelsFromData(data.bootsColour, data.bootsData);
+    }
+    function drawHat(data) {
+      if (data.hatStyle !== "none") {
+        drawPixelsFromData(data.hatColour, data.hatData);
       }
     }
-    function drawHair() {
-      if (playerData.hairStyle !== "bald") {
-        drawPixelsFromData(playerData.hairColour, playerData.hairData);
+    function drawHair(data) {
+      if (data.hairStyle !== "bald") {
+        drawPixelsFromData(data.hairColour, data.hairData);
       }
     }
-    function drawBeard() {
-      if (playerData.beardStyle === "beard") {
-        drawPixelsFromData(playerData.beardColour, playerData.beardData);
+    function drawBeard(data) {
+      if (data.beardStyle === "beard") {
+        drawPixelsFromData(data.beardColour, data.beardData);
       }
     }
-    function drawGoggles() {
-      if (playerData.gogglesStyle === "goggles") {
-        drawPixelsFromData(playerData.gogglesColour, playerData.gogglesData);
+    function drawGoggles(data) {
+      if (data.gogglesStyle === "goggles") {
+        drawPixelsFromData(data.gogglesColour, data.gogglesData);
       }
     }
-    function drawLongHair() {
-      if (playerData.longHairStyle === "long") {
-        drawPixelsFromData(playerData.hairColour, playerData.longHairData);
+    function drawLongHair(data) {
+      if (data.longHairStyle === "long") {
+        drawPixelsFromData(data.hairColour, data.longHairData);
       }
     }
 
-    function render() {
-      drawBackground();
-      drawSkin();
-      drawEye();
-      drawPants();
-      drawBelt();
-      drawBuckle();
-      drawBoots();
-      drawShirt();
-      drawGoggles();
-      drawLongHair();
-      drawHair();
-      drawBeard();
-      drawHat();
-      drawWeapon();
-      spriteImage.src = canvas.toDataURL();
+    function render(data) {
+      drawBackground(data);
+      drawSkin(data);
+      drawEye(data);
+      drawPants(data);
+      drawBelt(data);
+      drawBuckle(data);
+      drawBoots(data);
+      drawShirt(data);
+      drawGoggles(data);
+      drawLongHair(data);
+      drawHair(data);
+      drawBeard(data);
+      drawHat(data);
+      drawWeapon(data);
+      return canvas.toDataURL();
     }
-    render();
+    spriteImage.src = render(playerData);
 
     function generateDudes() {
       var dudes = document.querySelector(".dudes");
