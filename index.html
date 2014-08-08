@@ -161,6 +161,33 @@ var images = "skin,eye,shirt,pants,belt,buckle,pointy,boots,sword,knife,staff,ro
 var loadingImages = images.length;
 
 document.addEventListener("DOMContentLoaded", function() {
+
+  function randomItemFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function randomOptionFrom(select) {
+      return randomItemFrom(select.options);
+  }
+
+  function randomColour() {
+    return '#'+Math.floor(Math.random()*16777215).toString(16);
+  }
+
+  var inputs = document.querySelectorAll("input");
+
+  var selects = document.querySelectorAll("select");
+  
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].value = randomColour();
+  }
+  for (var i = 0; i < selects.length; i++) {
+    var option;
+	var arr = selects[i].options;
+	var index = arr[Math.floor(Math.random() * arr.length)];
+	index.selected = true;
+  }
+  
   images.forEach( function(image) {
     var img = document.createElement("img");
     document.body.appendChild(img);
@@ -182,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas.height = 64;
     canvas.width = 64;
     var ctx = canvas.getContext("2d");
-
+	
     function getDataFromImage(imgSelector) {
       var img = document.querySelector(imgSelector);
       var thisCanvas = document.createElement("canvas");
