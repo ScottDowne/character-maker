@@ -163,29 +163,66 @@ var loadingImages = images.length;
 document.addEventListener("DOMContentLoaded", function() {
 
   function randomItemFrom(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
+    return arr[Math.floor(Math.random() * arr.length)];
   }
 
   function randomOptionFrom(select) {
-      return randomItemFrom(select.options);
+    return randomItemFrom(select.options);
   }
 
   function randomColour() {
     return '#'+Math.floor(Math.random()*16777215).toString(16);
   }
 
+  var contastColours = "#ef4444,#faa31b,#fff000,#82c341,#009f75,#88c6ed,#394ba0,#d54799".split(",");
+
+  function randomColourFromContrast() {
+    var index = Math.floor(Math.random() * contastColours.length);
+    var colour = contastColours.splice(index, 1);
+    return colour;
+  }
+
   var inputs = document.querySelectorAll("input");
 
   var selects = document.querySelectorAll("select");
   
+  var randomColours = [];
+  /* 0 background,
+     1 skin,
+     2 eyes,
+     3 clothes,
+     4 weapon, buckle, helm,
+     5 hair,
+     6 belt, shoes, goggles,
+     7 hat */
+  var randomColourSlots = {
+    "skin-colour": 1,
+    "eye-colour": 2,
+    "shirt-colour": 3,
+    "pants-colour": 3,
+    "belt-colour": 6,
+    "buckle-colour": 4,
+    "hat-colour": 7,
+    "boots-colour": 6,
+    "weapon-colour": 4,
+    "goggles-colour": 6,
+    "beard-colour": 5,
+    "hair-colour": 5,
+    "background-colour": 0
+  };
+  for (var i = 0; i < 8; i++) {
+    randomColours.push(randomColourFromContrast());
+  }
   for (var i = 0; i < inputs.length; i++) {
-    inputs[i].value = randomColour();
+    var randomColourIndex = randomColourSlots[inputs[i].parentNode.className];
+    var thisRandomColour = randomColours[randomColourIndex];
+    inputs[i].value = thisRandomColour;
   }
   for (var i = 0; i < selects.length; i++) {
     var option;
-	var arr = selects[i].options;
-	var index = arr[Math.floor(Math.random() * arr.length)];
-	index.selected = true;
+	  var arr = selects[i].options;
+	  var index = arr[Math.floor(Math.random() * arr.length)];
+	  index.selected = true;
   }
   
   images.forEach( function(image) {
